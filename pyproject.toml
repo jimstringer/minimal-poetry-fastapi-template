@@ -1,0 +1,91 @@
+[project]
+name = "minimal-poetry-fastapi-template"
+version = "0.1.0"
+description = ""
+authors = [
+    {name = "James Stringer",email = "jim.stringer@gmail.com"}
+]
+readme = "README.md"
+requires-python = ">=3.15"
+dependencies = [
+    "fastapi (>=0.156.3,<0.157.0)",
+    "uvicorn[standard] (>=0.54.0,<0.55.0)",
+    "jinja2 (>=3.1.6,<4.0.0)",
+    "httpx2 (>=2.16.0,<3.0.0)",
+    "pendulum (>=3.3.0,<4.0.0)"
+]
+
+[tool.poetry]
+packages = [{include = "app", from = "src"}]
+package-mode = false
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[dependency-groups]
+dev = [
+    "pytest (>=9.1.1,<10.0.0)",
+    "black (>=26.10.1,<27.0.0)",
+    "ruff (>=0.17.1,<0.18.0)",
+    "mypy (>=2.4.0,<3.0.0)",
+    "pytest-asyncio (>=1.4.0,<2.0.0)",
+    "respx (>=0.23.1,<0.24.0)"
+]
+
+[tool.mypy]
+strict = true
+python_version = "3.15"
+
+
+[tool.ruff]
+target-version = "py315"  # your project's minimum Python version
+line-length = 88           # same default as Black
+
+
+[tool.ruff.lint]
+extend-select = [
+    "FAST",  # flake8-fast for fastapi-specific linting
+    "A",     # flake8-builtins
+    "ARG",   # flake8-unused-arguments
+    "ASYNC", # flake8-async
+    "B",     # flake8-bugbear
+    "BLE",   # flake8-blind-except
+    "C4",    # flake8-comprehensions
+    "C90",   # mccabe
+    "DTZ",   # flake8-datetimez
+    "E",     # pycodestyle errors (full set)
+    "EM",    # flake8-errmsg
+    "FBT",   # flake8-boolean-trap
+    "FLY",   # flynt
+    "FURB",  # refurb
+    "G",     # flake8-logging-format
+    "I",     # isort
+    "ICN",   # flake8-import-conventions
+    "ISC",   # flake8-implicit-str-concat
+    "INT",   # flake8-gettext
+    "LOG",   # flake8-logging
+    "N",     # pep8-naming
+    "PERF",  # perflint
+    "PGH",   # pygrep-hooks
+    "PIE",   # flake8-pie
+    "PL",    # pylint
+    "PTH",   # flake8-use-pathlib
+    "Q",     # flake8-quotes
+    "RET",   # flake8-return
+    "RSE",   # flake8-raise
+    "RUF",   # ruff-specific rules
+    "S",     # flake8-bandit
+    "SIM",   # flake8-simplify
+    "SLF",   # flake8-self
+    "SLOT",  # flake8-slots
+    "T10",   # flake8-debugger
+    "T20",   # flake8-print
+    "TC",    # flake8-type-checking
+    "TID",   # flake8-tidy-imports
+    "TRY",   # tryceratops
+    "UP",    # pyupgrade
+    "W",     # pycodestyle warnings
+    "YTT",   # flake8-2020
+]
+

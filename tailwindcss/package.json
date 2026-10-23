@@ -1,0 +1,10 @@
+{
+  "scripts": {
+    "css": "npx @tailwindcss/cli -i ./styles/app.css -o ../src/poetry_demo/static/css/app.css",
+    "css-watch": "npx @tailwindcss/cli -i ./styles/app.css -o ../src/poetry_demo/static/css/app.css --watch"
+  },
+  "devDependencies": {
+    "@tailwindcss/cli": "^4.3.3",
+    "tailwindcss": "^4.3.3"
+  }
+}
