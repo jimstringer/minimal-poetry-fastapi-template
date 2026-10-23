@@ -21,17 +21,17 @@ setup:
 	# Install Python dependencies
 	@poetry install
 	# Install Node.js dependencies for Tailwind CSS
-	@cd tailwind && npm install
+	@cd tailwindcss && npm install
 	@echo "=== Setup complete ==="
 
 css:
 	@echo "Compiling CSS..."
 	# we need to run this in the tailwind directory because of the way the tailwind config is set up
-	@cd tailwind && npm run css
+	@cd tailwindcss && npm run css
 
 css-watch:
 	@echo "Watching for changes in Tailwind CSS..."
-	@cd tailwind && npm run css-watch
+	@cd tailwindcss && npm run css-watch
 
 run:
 	@echo "Running the application..."
