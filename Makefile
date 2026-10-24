@@ -41,5 +41,14 @@ test:
 	@echo "Running tests..."
 	@poetry run pytest
 
+# Podman build command for the Docker image
+podman-build:
+	@echo "Exporting dependencies..."
+	@poetry export -f requirements.txt --output requirements.txt
+	@echo "Building Docker image..."
+	@podman build -f Dockerfile -t $(project_name):latest .
+	@rm -f requirements.txt
+
+
 
 

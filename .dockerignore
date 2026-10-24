@@ -1,0 +1,8 @@
+# .dockerignore - We only copy requirements.txt and src/app
+# don't copy __pycache__ as in my case it is from macos
+# Add other folders and files here so the don't accidently get copied
+.venv/
+__pycache__/
+*.pyc
+.git/
+.env
