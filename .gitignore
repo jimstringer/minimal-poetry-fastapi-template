@@ -1,3 +1,6 @@
+# This apps ignore folders and files for Python, FastAPI, and Visual Studio Code development.
+/data
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[codz]
@@ -116,3 +119,8 @@ tempCodeRunnerFile.py
 
 # PyPI configuration file
 .pypirc
+
+# macOS
+.DS_Store
+
+

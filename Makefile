@@ -35,7 +35,7 @@ css-watch:
 
 run:
 	@echo "Running the application..."
-	@poetry run uvicorn $(package_name).main:app --reload
+	@poetry run uvicorn $(package_name).main:app --reload --env-file .env --host 0.0.0.0 --port 8000
 
 test:
 	@echo "Running tests..."

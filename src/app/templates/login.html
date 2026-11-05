@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dim">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign in | The App</title>
+    <link rel="stylesheet" href="/static/css/app.css">
+</head>
+<body class="min-h-screen flex items-center justify-center px-4">
+    <main class="w-full max-w-sm p-2">
+        <header class="mb-8 text-center">
+            <h1 class="text-3xl font-bold tracking-tight">The App</h1>
+            <p class="mt-1 text-sm">Sign in to your account</p>
+        </header>
+
+        <section class="card border rounded-2xl p-6 space-y-4">
+            <h2 class="text-sm font-medium">Welcome back</h2>
+            <p class="text-sm">Enter your credentials to continue.</p>
+
+            {% if error %}
+            <p class="text-sm" role="alert">{{ error }}</p>
+            {% endif %}
+
+            <form action="/login" method="post" class="space-y-4">
+                <div>
+                    <label for="username" class="mb-1 block text-sm font-medium">Username</label>
+                    <input
+                        type="text"
+                        id="username"
+                        name="username"
+                        class="input w-full border rounded-lg px-3 py-2 focus:outline-none focus:ring-1"
+                        autocomplete="username"
+                        required
+                    >
+                </div>
+
+                <div>
+                    <label for="password" class="mb-1 block text-sm font-medium">Password</label>
+                    <input
+                        type="password"
+                        id="password"
+                        name="password"
+                        class="input w-full border rounded-lg px-3 py-2 focus:outline-none focus:ring-1"
+                        autocomplete="current-password"
+                        required
+                    >
+                </div>
+
+                <button type="submit" class="btn btn-primary w-full">Sign in</button>
+            </form>
+
+            <p class="text-center text-sm">
+                New here?
+                <a href="/signup" class="link">Create an account</a>
+            </p>
+        </section>
+    </main>
+</body>
+</html>

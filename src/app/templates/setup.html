@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dim">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create account | The App</title>
+    <link rel="stylesheet" href="/static/css/app.css">
+</head>
+<body class="min-h-screen flex items-center justify-center px-4 py-8">
+    <main class="w-full max-w-md">
+        <header class="mb-8 text-center">
+            <h1 class="text-3xl font-bold tracking-tight">The App</h1>
+            <p class="mt-1 text-sm text-base-content/70">Create your account</p>
+        </header>
+
+        <section class="card card-border bg-base-100">
+            <div class="card-body">
+                <div class="mb-2">
+                    <h2 class="card-title">Get started</h2>
+                    <p class="mt-1 text-sm text-base-content/70">
+                        Create an account to continue.
+                    </p>
+                </div>
+
+                {% if error %}
+                <div class="alert alert-error" role="alert">{{ error }}</div>
+                {% endif %}
+
+                <form action="/setup" method="post" class="space-y-4">
+                    <fieldset class="fieldset">
+                        <legend class="fieldset-legend">Username</legend>
+                        <input
+                            type="text"
+                            id="username"
+                            name="username"
+                            class="input w-full"
+                            autocomplete="username"
+                            required
+                            minlength="2"
+                            maxlength="100"
+                        >
+                    </fieldset>
+
+                    <fieldset class="fieldset">
+                        <legend class="fieldset-legend">Password</legend>
+                        <input
+                            type="password"
+                            id="password"
+                            name="password"
+                            class="input w-full"
+                            autocomplete="new-password"
+                            required
+                            minlength="8"
+                            maxlength="100"
+                        >
+                    </fieldset>
+
+                    <fieldset class="fieldset">
+                        <legend class="fieldset-legend">Confirm password</legend>
+                        <input
+                            type="password"
+                            id="password_confirm"
+                            name="password_confirm"
+                            class="input w-full"
+                            autocomplete="new-password"
+                            required
+                            minlength="8"
+                            maxlength="100"
+                        >
+                    </fieldset>
+                    
+                    <fieldset class="fieldset">
+                        <legend class="fieldset-legend">Display name</legend>
+                        <input
+                            type="text"
+                            id="display_name"
+                            name="display_name"
+                            class="input w-full"
+                            autocomplete="name"
+                        >
+                    </fieldset>
+
+                    <button type="submit" class="btn w-full">Create account</button>
+                </form>
+            </div>
+        </section>
+    </main>
+</body>
+</html>
