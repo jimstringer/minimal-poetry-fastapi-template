@@ -41,6 +41,11 @@ CREATE TABLE IF NOT EXISTS schema_version (
 
 # Versioned migrations: (version, description, sql)
 # Append new migrations to the end. Never modify or reorder existing entries.
+# Each migration can be a single SQL statement or a multi-statement script.
+# Each migration is applied in its own transaction, so if it fails the database is left unchanged.
+# If you create a table you must also add a corresponding entry to MIGRATION_TABLES
+# and add the indexes there as migrations can only be one transaction at a time
+# and the indexes must be created in a separate transaction.
 MIGRATIONS: Sequence[tuple[int, str, str]] = (
     (1, "Add log_entries table", """
         CREATE TABLE IF NOT EXISTS log_entries (
@@ -50,8 +55,6 @@ MIGRATIONS: Sequence[tuple[int, str, str]] = (
             module     TEXT,
             message    TEXT NOT NULL
         );
-        CREATE INDEX IF NOT EXISTS idx_log_entries_timestamp ON log_entries(timestamp);
-        CREATE INDEX IF NOT EXISTS idx_log_entries_level ON log_entries(level);
     """),
     (2, "Add settings table", """
         CREATE TABLE IF NOT EXISTS settings (
@@ -59,10 +62,6 @@ MIGRATIONS: Sequence[tuple[int, str, str]] = (
             key        TEXT NOT NULL UNIQUE,
             value      TEXT
         );
-        CREATE INDEX IF NOT EXISTS idx_settings_key ON settings(key);
-        INSERT OR IGNORE INTO settings (key, value) VALUES ('app_name', 'pyexpense-tracker');
-        INSERT OR IGNORE INTO settings (key, value) VALUES ('app_version', '0.1.0');
-        INSERT OR IGNORE INTO settings (key, value) VALUES ('data_theme', 'dim');
     """),
     (3, "Add data_theme column to users table", """
         ALTER TABLE users ADD COLUMN data_theme TEXT DEFAULT 'dim';
@@ -87,6 +86,9 @@ CREATE TABLE IF NOT EXISTS settings (
     value      TEXT
 );
 CREATE INDEX IF NOT EXISTS idx_settings_key ON settings(key);
+INSERT OR IGNORE INTO settings (key, value) VALUES ('app_name', 'pyexpense-tracker');
+INSERT OR IGNORE INTO settings (key, value) VALUES ('app_version', '0.1.0');
+INSERT OR IGNORE INTO settings (key, value) VALUES ('data_theme', 'dim');
 
 """
 
@@ -164,8 +166,12 @@ def _run_migrations(db: sqlite3.Connection) -> list[str]:
         ).fetchone():
             db.commit()
             continue
+        try:
             # Apply the migration
             db.execute(sql)
+        except sqlite3.OperationalError as e:
+            # raise should cause the transaction to roll back in the context manager
+            raise
         # Record the migration in the schema_version table
         db.execute(
             "INSERT INTO schema_version (version, description) VALUES (?, ?)",
